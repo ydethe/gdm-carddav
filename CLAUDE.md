@@ -10,6 +10,7 @@
 - Run: `uvicorn app.main:app --reload`
 - Test: `pytest -v`
 - Lint: `ruff check .`
+- Add dependencies : `uv add <package>`
 
 ## Architecture
 - Layers: Router → Service → Repository
