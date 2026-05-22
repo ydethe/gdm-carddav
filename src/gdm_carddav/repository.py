@@ -15,7 +15,7 @@ class PeopleRepository:
         """Visibility filter: non-deceased, approved, with a non-empty email."""
         return (
             or_(People.estDecede == False, People.estDecede.is_(None)),  # noqa: E712
-            People.status == "approved",
+            # People.status.like("approved"),
             People.email.isnot(None),
             People.email != "",
         )

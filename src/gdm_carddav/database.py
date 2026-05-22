@@ -33,7 +33,8 @@ def make_engine(database_url: str) -> AsyncEngine:
     kwargs: dict[str, Any] = {"pool_pre_ping": True}
     if "postgresql" in database_url:
         kwargs["connect_args"] = {"init": _init_asyncpg}
-    return create_async_engine(database_url, **kwargs)
+    # return create_async_engine(database_url, **kwargs)
+    return create_async_engine(database_url)
 
 
 def make_session_factory(engine: AsyncEngine) -> async_sessionmaker[AsyncSession]:
