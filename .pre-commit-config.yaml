@@ -1,0 +1,54 @@
+repos:
+- hooks:
+  - id: check-changelog
+    args: [--version-regex, '<a href="[^"]+">(?P<version>[^<]+)', --bump=auto, -t, keepachangelog]
+  - id: extract-todo
+    args: [--ignore, __pypackages__, .venv]
+  repo: https://github.com/ydethe/pdm_template.git
+  rev: v0.1.9
+
+- hooks:
+  - id: uv-lock
+  # - id: uv-export
+  #   args: ["--no-editable", "--no-emit-project"]
+  repo: https://github.com/astral-sh/uv-pre-commit
+  rev: 0.7.12
+
+- hooks:
+  - id: check-case-conflict
+  - id: check-merge-conflict
+  - id: mixed-line-ending
+  - id: trailing-whitespace
+  repo: https://github.com/pre-commit/pre-commit-hooks
+  rev: v5.0.0
+
+- hooks:
+  - additional_dependencies:
+    - click==8.0.4
+    args:
+    - --config
+    - pyproject.toml
+    id: black
+  repo: https://github.com/psf/black
+  rev: 22.3.0
+
+- hooks:
+  - additional_dependencies:
+    - black==22.3.0
+    - click==8.0.4
+    args:
+    - -l
+    - '100'
+    id: blacken-docs
+  repo: https://github.com/adamchainz/blacken-docs
+  rev: 1.13.0
+
+- hooks:
+  - args:
+    - --fix
+    - --exit-non-zero-on-fix
+    - --config
+    - pyproject.toml
+    id: ruff
+  repo: https://github.com/charliermarsh/ruff-pre-commit
+  rev: v0.3.3
