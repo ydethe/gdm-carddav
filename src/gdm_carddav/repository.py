@@ -4,7 +4,7 @@ from typing import Optional
 from sqlalchemy import func, or_, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from gdm_carddav.models import People
+from .models import People
 
 
 class PeopleRepository:

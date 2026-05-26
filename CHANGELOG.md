@@ -12,7 +12,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 
 ### Added
 
-- Added pre-commit hooks ([52474c2]() by Yann de The).
+- Added pre-commit hooks ([38b1791]() by Yann de The).
 - Added main.py ([b9e65a0]() by Yann de The).
 - Added Repository component ([0b4f377]() by Yann de The).
 
