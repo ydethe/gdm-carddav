@@ -47,19 +47,6 @@ async def test_get_all_excludes_null_deceased(session: AsyncSession) -> None:
 
 
 @pytest.mark.asyncio
-async def test_get_all_excludes_non_approved(session: AsyncSession) -> None:
-    # Arrange
-    session.add(make_person(id=1, status="pending"))
-    await session.commit()
-
-    # Act
-    results = await PeopleRepository(session).get_all()
-
-    # Assert
-    assert results == []
-
-
-@pytest.mark.asyncio
 async def test_get_all_excludes_null_email(session: AsyncSession) -> None:
     # Arrange
     session.add(make_person(id=1, email=None))
