@@ -494,3 +494,43 @@ async def test_dav_header_on_get(client: AsyncClient, router_session: AsyncSessi
 async def test_dav_header_on_propfind(client: AsyncClient) -> None:
     response = await client.request("PROPFIND", "/")
     assert response.headers.get("DAV") == "1, 3, addressbook"
+
+
+# ---------------------------------------------------------------------------
+# Edge cases
+# ---------------------------------------------------------------------------
+
+
+@pytest.mark.asyncio
+async def test_report_invalid_xml_returns_400(client: AsyncClient) -> None:
+    response = await client.request(
+        "REPORT",
+        f"/principals/{_TEST_USER}/contacts/",
+        content=b"not valid xml <<<",
+        headers={"Content-Type": "application/xml"},
+    )
+    assert response.status_code == 400
+
+
+@pytest.mark.asyncio
+async def test_report_unknown_type_returns_422(client: AsyncClient) -> None:
+    body = '<D:unknown-report xmlns:D="DAV:"/>'
+    response = await client.request(
+        "REPORT",
+        f"/principals/{_TEST_USER}/contacts/",
+        content=body.encode(),
+        headers={"Content-Type": "application/xml"},
+    )
+    assert response.status_code == 422
+
+
+@pytest.mark.asyncio
+async def test_head_contact_not_found(client: AsyncClient) -> None:
+    response = await client.head(f"/principals/{_TEST_USER}/contacts/gdm-9999@gdm_carddav.vcf")
+    assert response.status_code == 404
+
+
+@pytest.mark.asyncio
+async def test_get_contact_invalid_filename_returns_404(client: AsyncClient) -> None:
+    response = await client.get(f"/principals/{_TEST_USER}/contacts/not-a-uid.vcf")
+    assert response.status_code == 404
